@@ -1,70 +1,93 @@
 const personGenerator = {
-    surnameJson: `{  
-        "count": 15,
-        "list": {
-            "id_1": "Иванов",
-            "id_2": "Смирнов",
-            "id_3": "Кузнецов",
-            "id_4": "Васильев",
-            "id_5": "Петров",
-            "id_6": "Михайлов",
-            "id_7": "Новиков",
-            "id_8": "Федоров",
-            "id_9": "Кравцов",
-            "id_10": "Николаев",
-            "id_11": "Семёнов",
-            "id_12": "Славин",
-            "id_13": "Степанов",
-            "id_14": "Павлов",
-            "id_15": "Александров",
-            "id_16": "Морозов"
-        }
-    }`,
-    firstNameMaleJson: `{
-        "count": 10,
-        "list": {     
-            "id_1": "Александр",
-            "id_2": "Максим",
-            "id_3": "Иван",
-            "id_4": "Артем",
-            "id_5": "Дмитрий",
-            "id_6": "Никита",
-            "id_7": "Михаил",
-            "id_8": "Даниил",
-            "id_9": "Егор",
-            "id_10": "Андрей"
-        }
-    }`,
-
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
+    surnames: [
+        "Иванов",
+        "Смирнов",
+        "Кузнецов",
+        "Попов",
+        "Васильев",
+        "Петров",
+        "Соколов",
+        "Михайлов",
+        "Новиков",
+        "Федоров",
+        "Морозов",
+        "Волков",
+        "Алексеев",
+        "Лебедев",
+        "Семенов",
+        "Егоров",
+        "Павлов",
+        "Козлов",
+        "Степанов",
+        "Николаев"
+    ],
 
-    randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
+    maleNames: [
+        "Александр",
+        "Андрей",
+        "Антон",
+        "Артем",
+        "Даниил",
+        "Денис",
+        "Дмитрий",
+        "Егор",
+        "Иван",
+        "Кирилл",
+        "Максим",
+        "Матвей",
+        "Михаил",
+        "Никита",
+        "Олег",
+        "Павел",
+        "Роман",
+        "Сергей",
+        "Станислав",
+        "Тимофей"
+    ],
 
-    randomValue: function (json) {
-        const obj = JSON.parse(json);
-        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;  // this = personGenerator
-        return obj.list[prop];
-    },
+    femaleNames: [
+        "Александра",
+        "Анастасия",
+        "Анна",
+        "Валерия",
+        "Дарья",
+        "Екатерина",
+        "Елена",
+        "Ирина",
+        "Ксения",
+        "Любовь",
+        "Маргарита",
+        "Мария",
+        "Надежда",
+        "Наталья",
+        "Оксана",
+        "Ольга",
+        "Светлана",
+        "Татьяна",
+        "Юлия",
+        "Яна"
+    ],
 
-    randomFirstName: function() {
+    generatePerson: function(gender) {
+        let surname = this.surnames[Math.floor(Math.random() * this.surnames.length)];
+        let firstName;
+        
+        
+        if (gender === this.GENDER_MALE) {
+            firstName = this.maleNames[Math.floor(Math.random() * this.maleNames.length)];
+        } else {
+            firstName = this.femaleNames[Math.floor(Math.random() * this.femaleNames.length)];
+            if (Math.random() < 0.5) {
+                surname += 'а';
+            }
+        }
 
-        return this.randomValue(this.firstNameMaleJson);
-
-    },
-
-
-     randomSurname: function() {
-
-        return this.randomValue(this.surnameJson);
-
-    },
-
-
-    getPerson: function () {
-        this.person = {};
-        // this.person.gender = this.randomGender();
-        this.person.firstName = this.randomFirstName();
-        return this.person;
+        return {
+            lastName: surname,
+            firstName: firstName,
+            gender: gender
+        };
     }
 };
